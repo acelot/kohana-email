@@ -3,7 +3,7 @@
 return array(
 	Kohana::DEVELOPMENT => array
 	(
-		'example' => array(
+		'default' => array(
 			'driver'     => 'smtp',
 			'hostname'   => 'smtp.domain.tld',
 			'username'   => 'example@domain.tld',
@@ -12,7 +12,7 @@ return array(
 	),
 	Kohana::PRODUCTION  => array
 	(
-		'example' => array(
+		'default' => array(
 			'driver'     => 'smtp',
 			'hostname'   => 'smtp.domain.tld',
 			'username'   => 'example@domain.tld',

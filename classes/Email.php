@@ -3,6 +3,7 @@
 class Email {
 
 	// Instances pool
+	protected static $default = 'default';
 	protected static $instances = array();
 
 	/**
@@ -57,8 +58,10 @@ class Email {
 	 *
 	 * @return Swift_Mailer instance
 	 */
-	public static function instance($cname)
+	public static function instance($cname = NULL)
 	{
+		if ($cname === NULL) $cname = self::$default;
+
 		if (!isset(Email::$instances[$cname]))
 		{
 			$config = Kohana::$config->load('email')->get(Kohana::$environment);
@@ -74,6 +77,8 @@ class Email {
 	 * @param $body    string       Message body
 	 * @param $from    string|array From single address (for example 'user@domain.tld' or array('user@domain.tld' => 'John Doe'))
 	 * @param $to      string|array To single address (for example 'user@domain.tld' or array('user@domain.tld' => 'John Doe'))
+	 *
+	 * @return int Result code
 	 */
 	public static function send($cname, $subject, $body, $from, $to)
 	{
@@ -82,6 +87,6 @@ class Email {
 		$message = new Swift_Message($subject, $body, 'text/plain', 'utf-8');
 		$message->setFrom($from)->setTo($to);
 
-		$mailer->send($message);
+		return $mailer->send($message);
 	}
 }
