@@ -72,19 +72,21 @@ class Email {
 	}
 
 	/**
-	 * @param $cname   string       Config key from config/email.php
-	 * @param $subject string       Message subject
-	 * @param $body    string       Message body
-	 * @param $from    string|array From single address (for example 'user@domain.tld' or array('user@domain.tld' => 'John Doe'))
-	 * @param $to      string|array To single address (for example 'user@domain.tld' or array('user@domain.tld' => 'John Doe'))
-	 *
+	 * @param $cname     string       Config key from config/email.php
+	 * @param $subject   string       Message subject
+	 * @param $body      string       Message body
+	 * @param $from      string|array From single address (for example 'user@domain.tld' or array('user@domain.tld' => 'John Doe'))
+	 * @param $to        string|array To single address (for example 'user@domain.tld' or array('user@domain.tld' => 'John Doe'))
+	 * @param $mime_type string       Message MIME type, default value text/plain
+	 * @param $charset   string       Message character set, default value UTF-8
+	 * 
 	 * @return int Result code
 	 */
-	public static function send($cname, $subject, $body, $from, $to)
+	public static function send($cname, $subject, $body, $from, $to, $mime_type = 'text/plain', $charset = 'utf-8')
 	{
 		$mailer = self::instance($cname);
 
-		$message = new Swift_Message($subject, $body, 'text/plain', 'utf-8');
+		$message = new Swift_Message($subject, $body, $mime_type, $charset);
 		$message->setFrom($from)->setTo($to);
 
 		return $mailer->send($message);
